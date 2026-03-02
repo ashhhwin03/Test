@@ -1,0 +1,32 @@
+pipeline {
+    agent any
+
+    stages {
+         stage('Fetch') {
+            steps {
+                echo 'Fetching from repo'
+                git 'https://github.com/ashhhwin03/Test.git'
+            }
+        }
+        stage('Build') {
+            steps {
+                echo 'Building in progress'
+                bat 'javac hello.java'
+            }
+        }
+        stage('Execute') {
+            steps {
+                echo 'Executing'
+                bat 'java hello.java'
+            }
+        }
+    }
+    post{
+        success{
+            echo 'Pipeline build Successfuly'
+        }
+        failure{
+            echo 'Pipeline Failed'
+        }
+    }
+}
