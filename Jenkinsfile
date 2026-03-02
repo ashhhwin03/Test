@@ -2,10 +2,10 @@ pipeline {
     agent any
 
     stages {
-         stage('Fetch') {
+        stage('Fetch') {
             steps {
                 echo 'Fetching from repo'
-                git 'https://github.com/ashhhwin03/Test.git'
+                git 'https://github.com/aslin-123/DevopsPractical.git'
             }
         }
         stage('Build') {
@@ -19,14 +19,6 @@ pipeline {
                 echo 'Executing'
                 bat 'java hello.java'
             }
-        }
-    }
-    post{
-        success{
-            echo 'Pipeline build Successfuly'
-        }
-        failure{
-            echo 'Pipeline Failed'
         }
     }
 }
