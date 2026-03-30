@@ -1,23 +1,28 @@
 pipeline {
     agent any
-
     stages {
-        stage('Fetch') {
+        stage('1. Checkout') {
             steps {
-                echo 'Fetching from repo'
-                git 'https://github.com/aslin-123/DevopsPractical.git'
+                git url: 'https://github.com/ashhhwin03/Test', branch: 'master'
             }
         }
-        stage('Build') {
+        
+        stage('2. Build Image') {
             steps {
-                echo 'Building in progress'
-                bat 'javac hello.java'
+                bat 'docker build -t myweb .'
             }
         }
-        stage('Execute') {
+        
+        stage('3. Stop and Remove Containers') {
             steps {
-                echo 'Executing'
-                bat 'java hello.java'
+                bat 'docker stop mycont || exit 0'
+                bat 'docker rm mycont || exit 0'
+            }
+        }
+        
+        stage('4. Run Container') {
+            steps {
+                bat 'docker run -d -p 8000:80 --name mycont myweb'
             }
         }
     }
